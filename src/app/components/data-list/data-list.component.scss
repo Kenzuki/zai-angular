@@ -1,0 +1,22 @@
+.item-rating {
+    color: #fec600;
+    margin-left: 15px;
+}
+
+.edit-btn {
+    position: absolute;
+    top: 5px;
+    padding: 3px 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+
+    i {
+        font-size: 12px;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
