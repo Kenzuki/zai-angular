@@ -69,18 +69,18 @@ export class DataService {
     }
 
     addItem(item: Meal) {
-      let maxId = -1;
+      let maxId = 0;
 
-      for (const meal of this.data) {
-        if (meal.id > maxId) maxId = meal.id;
+      if (this.data.length > 0) {
+        for (const meal of this.data) {
+          if (meal.id > maxId) maxId = meal.id;
+        }
       }
 
-      if (maxId != -1) {
-        maxId++;
-        item.id = maxId;
-        this.data.push(item);
-        this.sortBy(this.sortingType);
-      }
+      maxId++;
+      item.id = maxId;
+      this.data.push(item);
+      this.sortBy(this.sortingType);
     }
 
     editItem(item: Meal) {
