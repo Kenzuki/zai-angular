@@ -1,18 +1,25 @@
-<div class="modal fade" id="add-or-edit-dialog" tabindex="-1" aria-labelledby="add-or-edit-dialog-label" aria-hidden="true">
+<div class="modal fade" id="add-or-edit-dialog" data-backdrop="static" tabindex="-1" aria-labelledby="add-or-edit-dialog-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="add-or-edit-dialog-label">Edytowanie dania</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="add-or-edit-dialog-label">{{ config?.title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearForm()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-
+                <form #form>
+                    <div *ngFor="let field of config?.fields" class="form-group">
+                        <label [for]="field.field + 'Field'">{{ field.label }}</label>
+                        <input [type]="field.type" class="form-control" [id]="field.field + 'Field'" [(ngModel)]="editedItem[field.field]" [name]="field.field"
+                               [attr.aria-describedby]="field.helpText ? field.field + 'Help' : ''" [required]="field.required ? field.required : true">
+                        <small *ngIf="field.helpText" [id]="field.field + 'Help'" class="form-text text-muted">{{ field.helpText }}</small>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary">Zapisz</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearForm()">{{ config?.rejectLabel ? config.rejectLabel : 'Zamknij' }}</button>
+                <button type="button" form="add-or-edit-form" class="btn btn-primary" (click)="submitForm(form)">{{ config?.acceptLabel ? config.acceptLabel : 'Zapisz' }}</button>
             </div>
         </div>
     </div>

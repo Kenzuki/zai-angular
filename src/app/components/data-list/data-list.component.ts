@@ -15,7 +15,7 @@ export class DataListComponent implements OnInit, OnDestroy {
 
   $dataSub: Subscription;
   data: Meal[] = [];
-  sortingType = 0
+  sortingType = 0;
 
   constructor(private dataService: DataService) { }
 
@@ -29,15 +29,15 @@ export class DataListComponent implements OnInit, OnDestroy {
     this.$dataSub.unsubscribe();
   }
 
-  onEdit(item: Meal) {
+  onEdit(item: Meal): void {
     this.editClicked.emit(item);
   }
 
-  onDelete(item: Meal) {
+  onDelete(item: Meal): void {
     this.deleteClicked.emit(item);
   }
 
-  onSortingChanged(sortingType: number) {
+  onSortingChanged(sortingType: number): void {
     switch (sortingType) {
       case 0:
         this.sortingType = sortingType;
@@ -54,7 +54,7 @@ export class DataListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFilterClicked(fromEl, toEl) {
+  onFilterClicked(fromEl, toEl): void {
     let fromPrice = fromEl.value;
     let toPrice = toEl.value;
 

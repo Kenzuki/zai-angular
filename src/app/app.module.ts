@@ -11,6 +11,7 @@ import { RatingDirective } from './directives/rating.directive';
 import { registerLocaleData } from '@angular/common';
 import { AddOrEditDialogComponent } from './components/add-or-edit-dialog/add-or-edit-dialog.component';
 import { ConfirmationDialog } from './components/confirmation-dialog/confirmation-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfirmationDialog } from './components/confirmation-dialog/confirmatio
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     {

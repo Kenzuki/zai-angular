@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
-<app-add-or-edit-dialog></app-add-or-edit-dialog>
+<app-add-or-edit-dialog [config]="addOrEditDialogConfig"></app-add-or-edit-dialog>
 <app-confirmation-dialog [config]="confirmationDialogConfig"></app-confirmation-dialog>
 <div class="container-fluid" style="height: 100%; padding-top: 60px; padding-bottom: 20px;">
-    <app-data-list (deleteClicked)="prepareDeleteConfirmationDialog($event)"></app-data-list>
+    <app-data-list (deleteClicked)="prepareDeleteConfirmationDialog($event)" (editClicked)="onEdit($event)"></app-data-list>
 </div>
