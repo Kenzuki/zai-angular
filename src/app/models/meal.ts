@@ -6,7 +6,7 @@ export interface Meal {
     imageUrl: string,
     preparingDuration: number,
     rating: number,
-    categories: MealType[]
+    categories?: MealType[]
 }
 
 export enum MealType {

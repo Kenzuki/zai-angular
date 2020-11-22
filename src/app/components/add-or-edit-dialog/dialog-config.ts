@@ -9,7 +9,24 @@ export interface DialogConfig {
 export interface DialogField {
     label: string;
     field: string;
-    type: 'text' | 'number';
+    type: 'text' | 'textarea' | 'number' | 'multiselect';
+    step?: number;
+    max?: number;
+    min?: number;
     helpText?: string;
     required?: boolean;
+    options?: {item_id: number, item_text: string}[];
+    multiselectSettings?: {
+        singleSelection: boolean;
+        selectAllText: string;
+        unSelectAllText: string;
+        itemsShowLimit?: number;
+        limitSelection?: number;
+        allowSearchFilter: boolean;
+        searchPlaceholderText: string;
+        placeholder: string;
+        noDataAvailablePlaceholderText: string;
+        idField: string;
+        textField: string;
+    }
 }

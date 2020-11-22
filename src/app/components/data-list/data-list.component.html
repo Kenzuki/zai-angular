@@ -1,34 +1,37 @@
 <div style="margin-left: auto; margin-right: auto; padding-top: 20px; width: 60%; display: flex;">
-    <div class="sorting-fields" style="display: flex; align-items: center; flex-grow: 1;">
-        <h5 style="margin-bottom: 0;">Sortuj po</h5>
-        <div class="dropdown" style="margin-left: 10px;">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="sortingDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ sortingType === 0 ? 'Nazwie' : sortingType === 1 ? 'Cenie' : 'Czasie przygotowywania' }}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="sortingDropdownBtn">
-                <a class="dropdown-item" href="#" (click)="onSortingChanged(0)">Nazwie</a>
-                <a class="dropdown-item" href="#" (click)="onSortingChanged(1)">Cenie</a>
-                <a class="dropdown-item" href="#" (click)="onSortingChanged(2)">Czasie przygotowywania</a>
+    <div class="row" style="width: 100%;">
+        <div class="sorting-fields col-lg" style="display: flex; align-items: center; flex-grow: 1;">
+            <h5 style="margin-bottom: 0;">Sortuj po</h5>
+            <div class="dropdown" style="margin-left: 10px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortingDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ sortingType === 'name' ? 'Nazwie' : sortingType === 'price' ? 'Cenie' : sortingType === 'preparingDuration' ? 'Czasie przygotowywania' : 'Ocenie' }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sortingDropdownBtn">
+                    <a class="dropdown-item" href="#" (click)="onSortingChanged('name')">Nazwie</a>
+                    <a class="dropdown-item" href="#" (click)="onSortingChanged('price')">Cenie</a>
+                    <a class="dropdown-item" href="#" (click)="onSortingChanged('preparingDuration')">Czasie przygotowywania</a>
+                    <a class="dropdown-item" href="#" (click)="onSortingChanged('rating')">Ocenie</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="filtering-fields" style="display: flex; align-items: center;">
-        <h5 class="mr-3" style="justify-self: flex-end;">Przedział cenowy</h5>
-        <div class="filtering-price-inputs">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="filter-price-from">zł</span>
+        <div class="filtering-fields col-lg mt-3 mt-lg-0" style="display: flex; align-items: center; justify-self: flex-end;">
+            <h5 class="mr-3" style="justify-self: flex-end;">Przedział cenowy</h5>
+            <div class="filtering-price-inputs">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="filter-price-from">zł</span>
+                    </div>
+                    <input #fromPrice type="number" class="form-control" placeholder="Od" aria-label="Username" aria-describedby="filter-price-from">
                 </div>
-                <input #fromPrice type="number" class="form-control" placeholder="Od" aria-label="Username" aria-describedby="filter-price-from">
-            </div>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="filter-price-to">zł</span>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="filter-price-to">zł</span>
+                    </div>
+                    <input #toPrice type="number" class="form-control" placeholder="Do" aria-label="Username" aria-describedby="filter-price-to">
                 </div>
-                <input #toPrice type="number" class="form-control" placeholder="Do" aria-label="Username" aria-describedby="filter-price-to">
             </div>
+            <button type="button" class="btn btn-primary ml-3" (click)="onFilterClicked(fromPrice, toPrice)">Filtruj</button>
         </div>
-        <button type="button" class="btn btn-primary ml-3" (click)="onFilterClicked(fromPrice, toPrice)">Filtruj</button>
     </div>
 </div>
 
@@ -37,15 +40,17 @@
         <div class="media">
             <img [src]="item.imageUrl" width="256px" height="auto" class="mr-3" alt="meal-img" style="border-radius: 5px;">
             <div class="media-body">
-                <button type="button" class="btn btn-warning edit-btn" style="right: 45px;" data-toggle="modal" data-target="#add-or-edit-dialog" (click)="onEdit(item)">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger edit-btn" style="right: 10px;" data-toggle="modal" data-target="#confirmation-dialog" (click)="onDelete(item)">
-                    <i class="fas fa-trash"></i>
-                </button>
                 <div class="mt-0" style="display: flex;">
                     <h5 style="font-weight: bold;">{{ item.name }}</h5>
-                    <div class="item-rating" [rating]="item"></div>
+                    <div class="item-rating" [rating]="item" style="margin-right: auto;"></div>
+                    <div class="edit-btns" style="display: flex; justify-self: flex-end;">
+                        <button type="button" class="btn btn-warning edit-btn" style="margin-right: 10px;" (click)="onEdit(item)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger edit-btn" (click)="onDelete(item)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
                 </div>
                 <p style="margin-bottom: 0.5rem;">{{ item.description }}</p>
                 <div class="item-duration" style="display: flex; align-items: center; margin-bottom: 0.5rem;">
@@ -53,9 +58,9 @@
                     <p style="margin-bottom: 0; margin-left: 10px;">{{ item.preparingDuration + ' min' }}</p>
                 </div>
                 <div class="item-categories">
-                    <span *ngFor="let category of item.categories" class="badge badge-pill badge-secondary">{{ category }}</span>
+                    <span *ngFor="let category of item.categories" class="badge badge-pill badge-secondary" style="margin-right: 5px;">{{ category }}</span>
                 </div>
-                <span style="position: absolute; right: 40px; bottom: 20px; font-size: 32px;">{{ item.price | currency:'PLN' }}</span>
+                <span class="item-price">{{ item.price | currency:'PLN' }}</span>
             </div>
         </div>
     </li>

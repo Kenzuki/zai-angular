@@ -4,8 +4,6 @@
 }
 
 .edit-btn {
-    position: absolute;
-    top: 5px;
     padding: 3px 0;
     width: 25px;
     height: 25px;
@@ -18,5 +16,18 @@
         position: relative;
         left: 50%;
         transform: translate(-50%, 0);
+    }
+}
+
+.item-price {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    font-size: 32px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .item-price {
+        left: 40px;
     }
 }

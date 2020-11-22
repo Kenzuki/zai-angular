@@ -1,7 +1,7 @@
 export interface ConfirmationDialogConfig {
     title: string;
     message: string;
-    acceptCallback: () => void;
+    acceptCallback: (item: any) => void;
     rejectLabel?: string;
     acceptLabel?: string;
 }

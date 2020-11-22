@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Meal, MealType } from '../../models/meal';
-import { DataService } from '../../services/data.service';
+import { Meal } from '../../models/meal';
+import { DataService, SortingType } from '../../services/data.service';
 
 @Component({
   selector: 'app-data-list',
@@ -15,12 +15,12 @@ export class DataListComponent implements OnInit, OnDestroy {
 
   $dataSub: Subscription;
   data: Meal[] = [];
-  sortingType = 0;
+  sortingType: SortingType = 'name';
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.$dataSub = this.dataService.getData().subscribe(data => {
+    this.$dataSub = this.dataService.meals.subscribe(data => {
       this.data = data;
     });
   }
@@ -37,21 +37,9 @@ export class DataListComponent implements OnInit, OnDestroy {
     this.deleteClicked.emit(item);
   }
 
-  onSortingChanged(sortingType: number): void {
-    switch (sortingType) {
-      case 0:
-        this.sortingType = sortingType;
-        this.dataService.sortBy(sortingType);
-        break;
-      case 1:
-        this.sortingType = sortingType;
-        this.dataService.sortBy(sortingType);
-        break;
-      case 2:
-        this.sortingType = sortingType;
-        this.dataService.sortBy(sortingType);
-        break;
-    }
+  onSortingChanged(sortingType: SortingType): void {
+    this.sortingType = sortingType;
+    this.dataService.sortBy(sortingType);
   }
 
   onFilterClicked(fromEl, toEl): void {
@@ -61,6 +49,6 @@ export class DataListComponent implements OnInit, OnDestroy {
     if (fromPrice == null || fromPrice == '') fromPrice = 0;
     if (toPrice == null || toPrice == '') toPrice = 0;
 
-    this.dataService.filterPrice(fromPrice, toPrice, this.sortingType);
+    this.dataService.filterPrice(fromPrice, toPrice);
   }
 }

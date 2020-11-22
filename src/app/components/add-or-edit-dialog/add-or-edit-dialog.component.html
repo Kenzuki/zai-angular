@@ -10,10 +10,24 @@
             <div class="modal-body">
                 <form #form>
                     <div *ngFor="let field of config?.fields" class="form-group">
-                        <label [for]="field.field + 'Field'">{{ field.label }}</label>
-                        <input [type]="field.type" class="form-control" [id]="field.field + 'Field'" [(ngModel)]="editedItem[field.field]" [name]="field.field"
-                               [attr.aria-describedby]="field.helpText ? field.field + 'Help' : ''" [required]="field.required ? field.required : true">
-                        <small *ngIf="field.helpText" [id]="field.field + 'Help'" class="form-text text-muted">{{ field.helpText }}</small>
+                        <div *ngIf="field.type === 'text' || field.type === 'number'">
+                            <label [for]="field.field + 'Field'">{{ field.label }}</label>
+                            <input [type]="field.type" class="form-control" [id]="field.field + 'Field'" [(ngModel)]="editedItem[field.field]" [name]="field.field"
+                                   [attr.aria-describedby]="field.helpText ? field.field + 'Help' : ''" [required]="field.required ? field.required : true" [step]="field.step"
+                                   [max]="field.max" [min]="field.min">
+                            <small *ngIf="field.helpText" [id]="field.field + 'Help'" class="form-text text-muted">{{ field.helpText }}</small>
+                        </div>
+                        <div *ngIf="field.type === 'textarea'">
+                            <label [for]="field.field + 'Field'">{{ field.label }}</label>
+                            <textarea class="form-control" [id]="field.field + 'Field'" [(ngModel)]="editedItem[field.field]" [name]="field.field" 
+                                      [required]="field.required ? field.required : true" rows="3"></textarea>
+                        </div>
+                        <div *ngIf="field.type === 'multiselect'">
+                            <label [for]="field.field + 'Field'">{{ field.label }}</label>
+                            <ng-multiselect-dropdown [id]="field.field + 'Field'" [name]="field.field" [placeholder]="field.multiselectSettings?.placeholder" [settings]="field.multiselectSettings" 
+                                                     [data]="field.options" [(ngModel)]="multiselectSelections[field.field]" required>
+                            </ng-multiselect-dropdown>
+                        </div>
                     </div>
                 </form>
             </div>

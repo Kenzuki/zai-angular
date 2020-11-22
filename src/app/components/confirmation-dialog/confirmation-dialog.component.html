@@ -11,8 +11,8 @@
                 {{ config?.message }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{config?.rejectLabel ? config.rejectLabel : 'Nie'}}</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="config?.acceptCallback()">{{ config?.acceptLabel ? config.acceptLabel : 'Tak' }}</button>
+                <button type="button" class="btn btn-secondary" (click)="closeDialog()">{{config?.rejectLabel ? config.rejectLabel : 'Nie'}}</button>
+                <button type="button" class="btn btn-danger" (click)="onAcceptClicked()">{{ config?.acceptLabel ? config.acceptLabel : 'Tak' }}</button>
             </div>
         </div>
     </div>
